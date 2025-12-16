@@ -32,7 +32,7 @@ spec:
             valueFiles:
               - $values/streaming-service/base/values.yaml
               - $values/streaming-service/envs/{{ .env }}/values.yaml
-        - repoURL: https://github.com/julianderks/xebia-demo-apps-kube-live.git
+        - repoURL: https://github.com/julianderks/xebia-demo-application-x-kube-live.git
           targetRevision: main
           ref: values
       destination:

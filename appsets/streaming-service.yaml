@@ -30,8 +30,8 @@ spec:
           targetRevision: 0.0.0-dev.43c569a
           helm:
             valueFiles:
-              - $values/streaming-service/base/values.yaml
-              - $values/streaming-service/envs/{{ .env }}/values.yaml
+              - $values/base/values.yaml
+              - $values/envs/{{ .env }}/values.yaml
         - repoURL: https://github.com/julianderks/xebia-demo-application-x-kube-live.git
           targetRevision: main
           ref: values

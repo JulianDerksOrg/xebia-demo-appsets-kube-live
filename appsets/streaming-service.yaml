@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: streaming-service
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - list:
+        elements:
+          - env: dev
+            namespace: team-streaming-dev
+          - env: tst
+            namespace: team-streaming-tst
+          - env: acc
+            namespace: team-streaming-acc
+          - env: prd
+            namespace: team-streaming-prd
+  template:
+    metadata:
+      name: "streaming-service-{{ .env }}"
+      labels:
+        team: streaming
+        app: streaming-service
+        env: "{{ .env }}"
+    spec:
+      project: team-streaming
+      sources:
+        - repoURL: oci://europe-west4-docker.pkg.dev/sandbox-9456/helm
+          chart: service-chart
+          targetRevision: 0.0.0-dev.43c569a
+          helm:
+            valueFiles:
+              - $values/streaming-service/base/values.yaml
+              - $values/streaming-service/envs/{{ .env }}/values.yaml
+        - repoURL: https://github.com/julianderks/xebia-demo-apps-kube-live.git
+          targetRevision: main
+          ref: values
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{ .namespace }}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false
+          - ApplyOutOfSyncOnly=true

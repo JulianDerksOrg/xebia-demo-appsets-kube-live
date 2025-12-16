@@ -9,7 +9,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/julianderks/xebia-demo-appsets-kube-live.git
+    repoURL: https://github.com/JulianDerksOrg/xebia-demo-appsets-kube-live.git
     targetRevision: main
     path: appsets
   destination:

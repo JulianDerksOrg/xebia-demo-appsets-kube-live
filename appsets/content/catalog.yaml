@@ -23,12 +23,13 @@ spec:
         primetime.io/team: content
         primetime.io/environment: "{{ .path.basename }}"
     spec:
-      project: default
+      project: content-team
       source:
         repoURL: https://github.com/JulianDerksOrg/xebia-demo-catalog-kube-live.git
         targetRevision: main
         path: envs/{{ .path.basename }}
         helm:
+          releaseName: "catalog-{{ .path.basename }}"
           valueFiles:
             - ../../base/values.yaml
             - values.yaml
